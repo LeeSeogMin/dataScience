@@ -21,6 +21,7 @@ practice/**/tmpclaude-*
 # Local-only source and planning docs
 docs/
 content/
+diagram/
 AGENTS.md
 github.md
 강의계획서.md
