@@ -1,0 +1,3 @@
+# 7-4a-autoencoder-anomaly.py
+# (원본: 6-4a-autoencoder-anomaly.py)
+# ...existing code...

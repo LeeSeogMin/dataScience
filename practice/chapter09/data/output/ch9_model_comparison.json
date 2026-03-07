@@ -1,0 +1,17 @@
+{
+  "SARIMA": {
+    "rmse": 2.2955,
+    "mape": 0.53
+  },
+  "Prophet": {
+    "rmse": 0.8659,
+    "mape": 0.19
+  },
+  "LSTM": {
+    "rmse": 11.7132,
+    "mape": 2.86
+  },
+  "best_model": "Prophet (additive)",
+  "train_size": 420,
+  "test_size": 106
+}

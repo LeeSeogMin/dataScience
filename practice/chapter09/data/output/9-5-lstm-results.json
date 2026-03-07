@@ -1,0 +1,26 @@
+{
+  "model": "LSTM",
+  "architecture": {
+    "input_size": 1,
+    "hidden_size": 64,
+    "num_layers": 2,
+    "seq_length": 24,
+    "total_params": 50497
+  },
+  "training": {
+    "epochs": 100,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "final_loss": 0.001399
+  },
+  "performance": {
+    "rmse": 7.534,
+    "mape": 1.83
+  },
+  "error_stats": {
+    "mean": 6.6836,
+    "std": 3.477,
+    "min": -1.2623,
+    "max": 13.9599
+  }
+}

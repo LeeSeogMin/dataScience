@@ -1,0 +1,3 @@
+# 9-7-timegpt.py
+# (원본: 11-7-timegpt.py)
+# ...existing code...

@@ -1,0 +1,26 @@
+# Chapter 5: 앙상블 학습 - 여전히 정형 데이터의 왕
+
+# 기본 라이브러리
+numpy>=1.24
+pandas>=2.0
+matplotlib>=3.7
+scikit-learn>=1.3
+
+# 그래디언트 부스팅
+xgboost>=2.0
+lightgbm>=4.0
+
+# 하이퍼파라미터 최적화
+optuna>=3.0
+
+# 모델 해석
+shap>=0.42
+
+# Counterfactual Explanations
+dice-ml>=0.11
+
+# 텍스트 임베딩 (선택적)
+sentence-transformers>=2.2
+
+# 환경 변수
+python-dotenv>=1.0

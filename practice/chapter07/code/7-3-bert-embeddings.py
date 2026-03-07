@@ -1,0 +1,3 @@
+# 8-3-bert-embeddings.py
+# (원본: 7-3-bert-embeddings.py)
+# ...existing code...

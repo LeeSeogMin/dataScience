@@ -1,0 +1,38 @@
+# 9장 토픽 모델링 실습 의존성
+# Python 3.10+
+
+# 토픽 모델링 핵심
+bertopic>=0.16.0
+gensim>=4.3.0
+
+# 임베딩 및 NLP
+sentence-transformers>=2.2.0
+transformers>=4.35.0
+torch>=2.0.0
+
+# 클러스터링 및 차원 축소
+hdbscan>=0.8.29
+umap-learn>=0.5.0
+
+# LLM API
+openai>=1.0.0
+langchain>=0.1.0
+langchain-openai>=0.0.2
+
+# 시각화
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.18.0
+pyLDAvis>=3.4.1
+
+# 데이터 처리
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+
+# 하이퍼파라미터 튜닝
+optuna>=3.5.0
+
+# 유틸리티
+python-dotenv>=1.0.0
+tqdm>=4.66.0

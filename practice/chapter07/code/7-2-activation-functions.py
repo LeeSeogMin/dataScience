@@ -1,0 +1,3 @@
+# 7-2-activation-functions.py
+# (원본: 6-2-activation-functions.py)
+# ...existing code...

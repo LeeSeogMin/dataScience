@@ -1,0 +1,31 @@
+{
+  "data_summary": {
+    "total": 432,
+    "train": 276,
+    "val": 69,
+    "test": 87,
+    "events_test": 23
+  },
+  "model_architecture": {
+    "input_features": 7,
+    "hidden_layers": [
+      32,
+      16
+    ],
+    "dropout": 0.3
+  },
+  "training": {
+    "epochs": 100,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 64
+  },
+  "performance": {
+    "best_val_c_index": 0.6164639850327409,
+    "test_c_index": 0.6694718514219384
+  },
+  "training_history": {
+    "final_train_loss": 3.624870204925537,
+    "final_val_c_index": 0.6052385406922357
+  }
+}

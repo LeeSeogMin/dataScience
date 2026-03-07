@@ -1,0 +1,9 @@
+{
+  "model": "SARIMA(0, 1, 1)x(0, 1, 1, 12)",
+  "train_size": 420,
+  "test_size": 106,
+  "aic": 195.82,
+  "bic": 207.74,
+  "rmse": 2.2955,
+  "mape": 0.53
+}
