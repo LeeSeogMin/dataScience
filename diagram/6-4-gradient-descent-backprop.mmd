@@ -1,0 +1,43 @@
+flowchart LR
+    subgraph forward["순전파 (Forward Pass)"]
+        direction LR
+        subgraph input["입력층"]
+            x1((x₁))
+            x2((x₂))
+        end
+        subgraph hidden["은닉층"]
+            h1((h₁))
+            h2((h₂))
+        end
+        subgraph output["출력층"]
+            y_hat((ŷ))
+        end
+
+        x1 -->|w₁| h1
+        x2 -->|w₂| h2
+        h1 -->|w₃| y_hat
+        h2 -->|w₄| y_hat
+        y_hat --> loss["L(ŷ,y)\n손실"]
+    end
+
+    subgraph backward["역전파 (Backward Pass)"]
+        direction RL
+        loss2["∂L/∂ŷ"] --> grad_w3["∂L/∂w₃"]
+        loss2 --> grad_w4["∂L/∂w₄"]
+        grad_w3 --> grad_h["∂L/∂h"]
+        grad_h --> grad_w1["∂L/∂w₁"]
+        grad_h --> grad_w2["∂L/∂w₂"]
+    end
+
+    subgraph update["가중치 업데이트"]
+        rule["w ← w - α · ∂L/∂w"]
+        alpha["α: 학습률"]
+        grad["∂L/∂w: 기울기"]
+    end
+
+    forward -.->|"기울기 계산"| backward
+    backward -.->|"파라미터 조정"| update
+
+    style forward fill:#e3f2fd
+    style backward fill:#fff3e0
+    style update fill:#e8f5e9

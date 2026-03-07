@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LightGCN 아키텍처 (단순 흑백)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .canvas {
+            width: 850px;
+            height: 550px;
+            border: 2px solid black;
+            position: relative;
+            background: white;
+            overflow: hidden;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 15px;
+            text-decoration: underline;
+        }
+
+        /* Layers */
+        .layer-box {
+            position: absolute;
+            border: 1.5px solid black;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: white;
+            width: 140px;
+        }
+
+        .node-circle {
+            width: 30px;
+            height: 30px;
+            border: 1.5px solid black;
+            border-radius: 50%;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        /* SVG for flow */
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .arrow { fill: none; stroke: black; stroke-width: 1.2; }
+        
+        .final-agg {
+            position: absolute;
+            border: 2px solid black;
+            width: 120px;
+            height: 200px;
+            right: 80px;
+            top: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .formula { font-family: monospace; font-size: 11px; margin-top: 5px; text-align: center; }
+
+        .layer-label {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="canvas">
+    <div class="title">LightGCN 아키텍처: 단순화된 정보 전파</div>
+
+    <!-- Layer 0: ID Embeddings -->
+    <div class="layer-box" style="left: 50px; top: 180px;">
+        <div class="layer-label">Layer 0</div>
+        <div style="font-size: 10px;">ID Embeddings</div>
+        <div class="node-circle">e<sup>(0)</sup></div>
+        <div style="font-size: 9px; margin-top: 5px;">(초기 임베딩)</div>
+    </div>
+
+    <!-- Layer 1 -->
+    <div class="layer-box" style="left: 250px; top: 120px;">
+        <div class="layer-label">Layer 1</div>
+        <div class="node-circle">e<sup>(1)</sup></div>
+        <div style="font-size: 9px; margin-top: 5px;">1-Hop 이웃 정보<br>(직접 상호작용)</div>
+    </div>
+
+    <!-- Layer K -->
+    <div class="layer-box" style="left: 450px; top: 80px;">
+        <div class="layer-label">Layer K</div>
+        <div class="node-circle">e<sup>(k)</sup></div>
+        <div style="font-size: 9px; margin-top: 5px;">K-Hop 고차 관계<br>(간접 상호작용)</div>
+    </div>
+
+    <!-- Final Weighted Sum -->
+    <div class="final-agg">
+        <div style="font-size: 24px;">Σ</div>
+        <div>Weighted Sum<br>& Mean</div>
+        <div class="formula">E = Σ α<sub>k</sub> e<sup>(k)</sup></div>
+    </div>
+
+    <div class="node-circle" style="right: 20px; top: 235px; width: 50px; height: 50px; border-width: 2px;">Final E</div>
+
+    <!-- Process Labels -->
+    <div style="position: absolute; left: 195px; top: 200px; font-size: 11px; font-weight: bold; background: white;">Neighbor Agg</div>
+    <div style="position: absolute; left: 395px; top: 140px; font-size: 11px; font-weight: bold; background: white;">Neighbor Agg</div>
+
+    <svg>
+        <defs>
+            <marker id="head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="black" />
+            </marker>
+        </defs>
+        
+        <!-- Layer Propagation -->
+        <path d="M 190,215 L 250,180" class="arrow" marker-end="url(#head)" />
+        <path d="M 390,170 L 450,120" class="arrow" marker-end="url(#head)" />
+
+        <!-- To Final Aggregation -->
+        <path d="M 190,230 L 650,230" class="arrow" marker-end="url(#head)" stroke-dasharray="4" />
+        <path d="M 390,200 L 650,240" class="arrow" marker-end="url(#head)" stroke-dasharray="4" />
+        <path d="M 590,150 L 650,250" class="arrow" marker-end="url(#head)" stroke-dasharray="4" />
+
+        <!-- Final Out -->
+        <path d="M 770,260 L 800,260" class="arrow" marker-end="url(#head)" />
+    </svg>
+
+    <!-- Key Characteristics -->
+    <div style="position: absolute; bottom: 30px; left: 50px; border: 1px solid black; padding: 10px; font-size: 12px; width: 730px;">
+        <b>LightGCN 특징:</b> (1) 선형 변환(W) 제거  |  (2) 비선형 활성화 함수(ReLU) 제거  |  (3) 레이어별 임베딩의 가중 합산으로 최종 표현 생성
+    </div>
+</div>
+
+</body>
+</html>

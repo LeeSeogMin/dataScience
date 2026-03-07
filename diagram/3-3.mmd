@@ -1,0 +1,19 @@
+graph TD
+    A["<b>루트 노드</b><br/>전체 12명<br/>승인 6 / 거절 6<br/><i>지니 = 0.50</i>"]
+
+    A -->|"연소득 ≤ 4천만원"| B["<b>노드 B</b><br/>6명<br/>승인 1 / 거절 5<br/><i>지니 = 0.28</i>"]
+    A -->|"연소득 > 4천만원"| C["<b>노드 C</b><br/>6명<br/>승인 5 / 거절 1<br/><i>지니 = 0.28</i>"]
+
+    B -->|"신용점수 ≤ 650"| D["<b>리프 D</b><br/>4명<br/>거절 100%<br/><i>지니 = 0.00</i>"]
+    B -->|"신용점수 > 650"| E["<b>리프 E</b><br/>2명<br/>혼합 50%/50%<br/><i>지니 = 0.50</i>"]
+
+    C -->|"신용점수 ≤ 700"| F["<b>리프 F</b><br/>2명<br/>혼합 50%/50%<br/><i>지니 = 0.50</i>"]
+    C -->|"신용점수 > 700"| G["<b>리프 G</b><br/>4명<br/>승인 100%<br/><i>지니 = 0.00</i>"]
+
+    style A fill:#f5f5f5,stroke:#333,stroke-width:2px
+    style B fill:#ffe6e6,stroke:#d32f2f
+    style C fill:#e8f5e9,stroke:#388e3c
+    style D fill:#ffcdd2,stroke:#d32f2f
+    style E fill:#fff9c4,stroke:#f9a825
+    style F fill:#fff9c4,stroke:#f9a825
+    style G fill:#c8e6c9,stroke:#388e3c

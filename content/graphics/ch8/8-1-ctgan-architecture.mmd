@@ -1,0 +1,36 @@
+graph TB
+    subgraph Input["입력 처리"]
+        RD[("실제 데이터<br/>Real Data")]
+        MSN["Mode-specific<br/>Normalization"]
+        CV["Conditional<br/>Vector"]
+    end
+
+    subgraph Generator["Generator"]
+        Z[("노이즈 z<br/>~ N(0,1)")]
+        FC1["FC + BatchNorm<br/>+ ReLU"]
+        FC2["FC + BatchNorm<br/>+ ReLU"]
+        OUT["출력층<br/>(Tanh + Softmax)"]
+    end
+
+    subgraph Discriminator["Discriminator (Critic)"]
+        D_IN["입력층"]
+        D_FC1["FC + LeakyReLU<br/>+ Dropout"]
+        D_FC2["FC + LeakyReLU<br/>+ Dropout"]
+        D_OUT["Wasserstein<br/>Score"]
+    end
+
+    subgraph Loss["손실 함수"]
+        WL["Wasserstein Loss"]
+        GP["Gradient Penalty<br/>(λ=10)"]
+    end
+
+    RD --> MSN
+    MSN --> CV
+    CV --> Z
+    Z --> FC1 --> FC2 --> OUT
+    OUT -->|"합성 데이터"| D_IN
+    MSN -->|"실제 데이터"| D_IN
+    CV -->|"조건 연결"| D_IN
+    D_IN --> D_FC1 --> D_FC2 --> D_OUT
+    D_OUT --> WL
+    D_OUT --> GP

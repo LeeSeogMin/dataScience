@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransE 개념 (단순 흑백)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .canvas {
+            width: 800px;
+            height: 500px;
+            border: 2px solid black;
+            position: relative;
+            background: white;
+            overflow: hidden;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+
+        /* Vectors / Points */
+        .point {
+            width: 12px;
+            height: 12px;
+            background: black;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+
+        .label {
+            position: absolute;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* SVG for arrows */
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .vector { fill: none; stroke: black; stroke-width: 2; }
+        .relation-vector { stroke-width: 3; }
+        
+        /* Grid lines (optional for space feel) */
+        .grid {
+            stroke: #eee;
+            stroke-width: 1;
+        }
+
+        .equation-box {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            border: 2px solid black;
+            padding: 15px;
+            background: white;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .desc-box {
+            position: absolute;
+            top: 80px;
+            left: 40px;
+            width: 200px;
+            font-size: 14px;
+            border-left: 3px solid black;
+            padding-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="canvas">
+    <div class="title">TransE: 관계를 평행 이동(Translation)으로 모델링</div>
+
+    <div class="desc-box">
+        <b>핵심 아이디어:</b><br>
+        임베딩 공간에서 머리 엔티티(h)에 관계(r)를 더하면 꼬리 엔티티(t)에 도달한다.
+    </div>
+
+    <!-- Coordinate Space -->
+    <svg>
+        <defs>
+            <marker id="arrowhead" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                <polygon points="0 0, 7 3.5, 0 7" fill="black" />
+            </marker>
+        </defs>
+        
+        <!-- Axis -->
+        <line x1="50" y1="450" x2="750" y2="450" stroke="black" stroke-width="1" marker-end="url(#arrowhead)" />
+        <line x1="50" y1="450" x2="50" y2="50" stroke="black" stroke-width="1" marker-end="url(#arrowhead)" />
+        <text x="730" y="470" font-size="12">Dimension 1</text>
+        <text x="20" y="70" font-size="12" transform="rotate(-90, 20, 70)">Dimension 2</text>
+
+        <!-- Vectors -->
+        <!-- Origin to h -->
+        <line x1="50" y1="450" x2="200" y2="300" class="vector" stroke-dasharray="4" marker-end="url(#arrowhead)" />
+        <!-- h to t (the relation r) -->
+        <line x1="200" y1="300" x2="550" y2="150" class="vector relation-vector" marker-end="url(#arrowhead)" />
+        <!-- Origin to t -->
+        <line x1="50" y1="450" x2="550" y2="150" class="vector" stroke-dasharray="4" marker-end="url(#arrowhead)" />
+    </svg>
+
+    <!-- Points and Labels -->
+    <div class="point" style="left: 200px; top: 300px;"></div>
+    <div class="label" style="left: 170px; top: 310px;">머리(h)</div>
+    <div style="position: absolute; left: 140px; top: 260px; font-size: 13px; font-style: italic;">"아인슈타인"</div>
+
+    <div class="point" style="left: 550px; top: 150px;"></div>
+    <div class="label" style="left: 560px; top: 130px;">꼬리(t)</div>
+    <div style="position: absolute; left: 560px; top: 160px; font-size: 13px; font-style: italic;">"독일"</div>
+
+    <div class="label" style="left: 360px; top: 190px; font-size: 20px;">관계(r)</div>
+    <div style="position: absolute; left: 365px; top: 220px; font-size: 13px; font-style: italic;">"+ 출생지"</div>
+
+    <div class="equation-box">
+        h + r ≈ t
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+flowchart TB
+    subgraph data["전체 학습 데이터 (N개 샘플)"]
+        d1["샘플 1"]
+        d2["샘플 2"]
+        d3["..."]
+        d4["샘플 N"]
+    end
+
+    subgraph batch["Batch GD"]
+        b1["N개 전체 사용"]
+        b2["정확한 기울기"]
+        b3["메모리 부담 ↑"]
+    end
+
+    subgraph sgd["SGD (확률적)"]
+        s1["1개씩 사용"]
+        s2["노이즈 ↑"]
+        s3["메모리 효율 ↑"]
+    end
+
+    subgraph mini["Mini-batch GD"]
+        m1["32~512개 사용"]
+        m2["균형잡힌 기울기"]
+        m3["GPU 병렬화 가능"]
+    end
+
+    data --> batch
+    data --> sgd
+    data --> mini
+
+    batch --> result1["수렴: 안정적\n속도: 느림\n일반화: 보통"]
+    sgd --> result2["수렴: 불안정\n속도: 빠름\n일반화: 좋음"]
+    mini --> result3["수렴: 적당히 안정\n속도: 빠름\n일반화: 좋음"]
+
+    style mini fill:#e1f5fe
+    style result3 fill:#c8e6c9

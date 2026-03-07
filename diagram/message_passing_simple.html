@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메시지 패싱 프레임워크 (단순 흑백)</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .canvas {
+            width: 800px;
+            height: 500px;
+            border: 2px solid black;
+            position: relative;
+            background: white;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            text-decoration: underline;
+        }
+
+        /* Nodes */
+        .node {
+            width: 50px;
+            height: 50px;
+            border: 2px solid black;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            position: absolute;
+            background: white;
+        }
+
+        .node-u { width: 70px; height: 70px; left: 600px; top: 200px; font-size: 20px; }
+        .v1 { left: 100px; top: 100px; }
+        .v2 { left: 100px; top: 215px; }
+        .v3 { left: 100px; top: 330px; }
+
+        /* Labels */
+        .label {
+            position: absolute;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Arrows (Vector style) */
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .arrow { fill: none; stroke: black; stroke-width: 2; }
+        .arrow-head { fill: black; }
+
+        /* Legend / Process Box */
+        .process-box {
+            position: absolute;
+            left: 300px;
+            top: 150px;
+            width: 180px;
+            height: 180px;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .step-info {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 40px;
+            font-size: 14px;
+            width: 90%;
+            justify-content: center;
+        }
+
+        .step { border: 1px solid black; padding: 5px 10px; }
+
+        .formula { font-family: monospace; margin-top: 5px; font-size: 12px; }
+
+    </style>
+</head>
+<body>
+
+<div class="canvas">
+    <div class="title">메시지 패싱 프레임워크 (Message Passing)</div>
+
+    <!-- Nodes -->
+    <div class="node v1">v₁</div>
+    <div class="node v2">v₂</div>
+    <div class="node v3">v₃</div>
+    <div class="node node-u">u</div>
+
+    <!-- Central Process Box -->
+    <div class="process-box">
+        <div style="font-size: 30px; font-weight: bold; margin-bottom: 5px;">Σ</div>
+        <div><b>AGGREGATION</b></div>
+        <div style="font-size: 12px; margin-top: 5px;">Sum, Mean, or Max</div>
+    </div>
+
+    <!-- Directional Indicators -->
+    <svg>
+        <defs>
+            <marker id="head" orient="auto" markerWidth="4" markerHeight="4" refX="0.1" refY="2">
+                <path d="M0,0 V4 L4,2 Z" fill="black" />
+            </marker>
+        </defs>
+        <!-- Lines from v to Aggregator -->
+        <path d="M 150,125 L 300,190" class="arrow" marker-end="url(#head)" />
+        <path d="M 150,240 L 300,240" class="arrow" marker-end="url(#head)" />
+        <path d="M 150,355 L 300,290" class="arrow" marker-end="url(#head)" />
+        
+        <!-- Line from Aggregator to u -->
+        <path d="M 480,240 L 600,240" class="arrow" marker-end="url(#head)" />
+    </svg>
+
+    <!-- Formula Labels -->
+    <div class="label" style="left: 170px; top: 140px;">m<sub>uv₁</sub></div>
+    <div class="label" style="left: 170px; top: 220px;">m<sub>uv₂</sub></div>
+    <div class="label" style="left: 170px; top: 310px;">m<sub>uv₃</sub></div>
+    <div class="label" style="left: 500px; top: 215px;">m<sub>u</sub></div>
+
+    <!-- Steps -->
+    <div class="step-info">
+        <div class="step">
+            <b>1. 생성</b>
+            <div class="formula">m = φ(h<sub>u</sub>,h<sub>v</sub>)</div>
+        </div>
+        <div class="step">
+            <b>2. 집계</b>
+            <div class="formula">m<sub>u</sub> = AGG({m})</div>
+        </div>
+        <div class="step">
+            <b>3. 갱신</b>
+            <div class="formula">h<sub>u</sub>' = γ(h<sub>u</sub>,m<sub>u</sub>)</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+graph LR
+    %% Nodes
+    X0((x₀))
+    X1((x₁))
+    Dots1[...]
+    Xt_m1((xₜ₋₁))
+    Xt((xₜ))
+    Dots2[...]
+    XT((xₜ))
+
+    %% Sequence Connections (Invisible or thin)
+    X0 --- X1 --- Dots1 --- Xt_m1 --- Xt --- Dots2 --- XT
+
+    %% Forward Process (Top)
+    X0 -. "전방 확산 과정 (규칙 기반 잡음 추가)" .-> XT
+    Xt_m1 -- "q(Xₜ | Xₜ₋₁)" --> Xt
+
+    %% Reverse Process (Bottom)
+    XT -. "역 디노이징 과정 (학습 기반 생성)" .-> X0
+    Xt -- "p_θ(Xₜ₋₁ | Xₜ)" --> Xt_m1
+
+    %% Styling for visual clarity
+    style X0 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px
+    style XT fill:#F5F5F5,stroke:#9E9E9E,stroke-width:2px
+    style Xt_m1 fill:#FAFAFA,stroke:#BDBDBD
+    style Xt fill:#FAFAFA,stroke:#BDBDBD
+
+    %% Link colors
+    linkStyle 6 stroke:#1E88E5,stroke-width:2px,color:#1E88E5
+    linkStyle 7 stroke:#1E88E5,stroke-width:2px,color:#1E88E5
+    linkStyle 8 stroke:#E53935,stroke-width:2px,color:#E53935
+    linkStyle 9 stroke:#E53935,stroke-width:2px,color:#E53935

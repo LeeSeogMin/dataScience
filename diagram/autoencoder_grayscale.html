@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오토인코더 구조 (Grayscale)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --line-color: #9ca3af;
+            --node-fill: #e5e7eb;
+            --node-border: #4b5563;
+            --latent-fill: #374151;
+            --box-border: #374151;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans KR', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-primary);
+        }
+
+        .container {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .diagram-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+        }
+
+        /* Digit Boxes */
+        .digit-box-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .digit-box {
+            width: 120px;
+            height: 120px;
+            border: 1.5px solid var(--box-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+        }
+
+        .digit-svg {
+            width: 80px;
+            height: 80px;
+            fill: none;
+            stroke: black;
+            stroke-width: 3.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .data-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        /* Network Architecture */
+        .network-svg {
+            min-width: 600px;
+            height: 400px;
+        }
+
+        .label-text {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            text-anchor: middle;
+            fill: var(--text-primary);
+        }
+
+        .label-text.title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .sub-label {
+            font-size: 13px;
+            fill: var(--text-secondary);
+            text-anchor: middle;
+        }
+
+        .connection-line {
+            stroke: var(--line-color);
+            stroke-width: 0.8;
+            opacity: 0.6;
+        }
+
+        .node {
+            stroke: var(--node-border);
+            stroke-width: 1.5;
+            fill: var(--node-fill);
+        }
+
+        .node.latent {
+            fill: var(--latent-fill);
+            stroke: #000;
+        }
+
+        .trapezoid {
+            fill: none;
+            stroke: #f87171; /* Original had red outlines, keeping them subtle or grayscale */
+            stroke-width: 1;
+            stroke-dasharray: 4;
+            opacity: 0.4;
+        }
+
+        /* Bottom labels */
+        .bottom-labels {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: -40px;
+            padding: 0 100px;
+        }
+
+        .bottom-label-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .arrow-up {
+            width: 2px;
+            height: 30px;
+            background: #9ca3af;
+            position: relative;
+        }
+
+        .arrow-up::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -4px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 7px solid #9ca3af;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="diagram-wrapper">
+            <!-- Input Data -->
+            <div class="digit-box-container" style="margin-top: -30px;">
+                <div class="digit-box">
+                    <svg class="digit-svg" viewBox="0 0 100 100">
+                        <path d="M30 25 L75 25 L35 55 C55 45, 80 55, 75 75 C70 95, 30 95, 25 75" />
+                    </svg>
+                </div>
+                <div class="data-label">784</div>
+            </div>
+
+            <!-- Main Network -->
+            <svg class="network-svg" viewBox="0 0 600 400">
+                <!-- Trapezoids -->
+                <path d="M20 50 L190 120 L190 280 L20 350 Z" class="trapezoid" />
+                <path d="M580 50 L410 120 L410 280 L580 350 Z" class="trapezoid" />
+
+                <!-- Layer Labels -->
+                <text x="105" y="30" class="label-text title">인코더</text>
+                <path d="M40 40 L170 40" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                
+                <text x="300" y="30" class="label-text title">잠재</text>
+                <text x="300" y="50" class="label-text title">공간</text>
+                
+                <text x="495" y="30" class="label-text title">디코더</text>
+                <path d="M430 40 L560 40" stroke="black" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+
+                <!-- Definitions for markers -->
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="black" />
+                    </marker>
+                    <marker id="arrow-gray" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af" />
+                    </marker>
+                </defs>
+
+                <!-- Nodes and Connections -->
+                <g id="connections"></g>
+                <g id="nodes"></g>
+
+                <!-- Script to populate nodes and connections -->
+                <script>
+                    const nodeGroups = [
+                        {x: 60, count: 6},  // Encoder input
+                        {x: 160, count: 4}, // Encoder middle
+                        {x: 300, count: 2}, // Latent
+                        {x: 440, count: 4}, // Decoder middle
+                        {x: 540, count: 6}  // Decoder output
+                    ];
+
+                    const connectionsContainer = document.getElementById('connections');
+                    const nodesContainer = document.getElementById('nodes');
+
+                    // Draw connections first (so they are behind nodes)
+                    for (let i = 0; i < nodeGroups.length - 1; i++) {
+                        const g1 = nodeGroups[i];
+                        const g2 = nodeGroups[i+1];
+                        
+                        const spacing1 = 300 / g1.count;
+                        const startY1 = 200 - (spacing1 * (g1.count - 1)) / 2;
+
+                        const spacing2 = 300 / g2.count;
+                        const startY2 = 200 - (spacing2 * (g2.count - 1)) / 2;
+
+                        for (let n1 = 0; n1 < g1.count; n1++) {
+                            for (let n2 = 0; n2 < g2.count; n2++) {
+                                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                                line.setAttribute("x1", g1.x);
+                                line.setAttribute("y1", startY1 + n1 * spacing1);
+                                line.setAttribute("x2", g2.x);
+                                line.setAttribute("y2", startY2 + n2 * spacing2);
+                                line.setAttribute("class", "connection-line");
+                                connectionsContainer.appendChild(line);
+                            }
+                        }
+                    }
+
+                    // Draw nodes
+                    nodeGroups.forEach((group, groupIdx) => {
+                        const spacing = 300 / group.count;
+                        const startY = 200 - (spacing * (group.count - 1)) / 2;
+                        
+                        for (let i = 0; i < group.count; i++) {
+                            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                            circle.setAttribute("cx", group.x);
+                            circle.setAttribute("cy", startY + i * spacing);
+                            circle.setAttribute("r", 8);
+                            circle.setAttribute("class", groupIdx === 2 ? "node latent" : "node");
+                            nodesContainer.appendChild(circle);
+                        }
+                    });
+                </script>
+
+                <!-- Center Arrow for Latent Space -->
+                <line x1="300" y1="65" x2="300" y2="100" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+                <line x1="300" y1="335" x2="300" y2="300" stroke="#000" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+                <text x="315" y="325" class="label-text" style="text-anchor: start;">32</text>
+            </svg>
+
+            <!-- Output Data -->
+            <div class="digit-box-container" style="margin-top: -30px;">
+                <div class="digit-box">
+                    <svg class="digit-svg" viewBox="0 0 100 100">
+                        <path d="M30 25 L75 25 L35 55 C55 45, 80 55, 75 75 C70 95, 30 95, 25 75" />
+                    </svg>
+                </div>
+                <div class="data-label">784</div>
+            </div>
+        </div>
+
+        <!-- Bottom Labels -->
+        <div class="bottom-labels">
+            <div class="bottom-label-item">
+                <div class="arrow-up"></div>
+                <span>입력 데이터</span>
+            </div>
+            <div class="bottom-label-item">
+                <div class="arrow-up"></div>
+                <span>인코딩된 데이터</span>
+            </div>
+            <div class="bottom-label-item">
+                <div class="arrow-up"></div>
+                <span>재건된 데이터</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대규모 복잡 시계열 모형 비교</title>
+    <style>
+        body {
+            font-family: 'Malgun Gothic', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 1200px;
+        }
+        .title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            border: 2px solid #333;
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+        }
+        .axis-line {
+            stroke: #333;
+            stroke-width: 2;
+            fill: none;
+        }
+        .grid-line {
+            stroke: #ddd;
+            stroke-width: 1;
+            stroke-dasharray: 3,3;
+        }
+        .line-actual {
+            stroke: #000;
+            stroke-width: 3;
+            fill: none;
+        }
+        .line-lstm-multi {
+            stroke: #444;
+            stroke-width: 2.5;
+            stroke-dasharray: 6,3;
+            fill: none;
+        }
+        .line-sarima {
+            stroke: #777;
+            stroke-width: 2;
+            stroke-dasharray: 3,3;
+            fill: none;
+        }
+        .line-prophet {
+            stroke: #aaa;
+            stroke-width: 2;
+            stroke-dasharray: 8,4;
+            fill: none;
+        }
+        .highlight-region {
+            fill: #f0f0f0;
+            opacity: 0.5;
+        }
+        .axis-label {
+            font-size: 13px;
+            fill: #333;
+            font-weight: bold;
+        }
+        .tick-label {
+            font-size: 11px;
+            fill: #555;
+        }
+        .annotation-box {
+            fill: #f8f9fa;
+            stroke: #666;
+            stroke-width: 1;
+            rx: 5;
+        }
+        .annotation-text {
+            font-size: 11px;
+            fill: #333;
+            font-weight: bold;
+        }
+        .legend-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-line {
+            width: 40px;
+            height: 3px;
+        }
+        .legend-line.actual {
+            background: #000;
+        }
+        .legend-line.lstm {
+            background: #444;
+            background-image: repeating-linear-gradient(90deg, #444, #444 6px, transparent 6px, transparent 9px);
+        }
+        .legend-line.sarima {
+            background: #777;
+            background-image: repeating-linear-gradient(90deg, #777, #777 3px, transparent 3px, transparent 6px);
+        }
+        .legend-line.prophet {
+            background: #aaa;
+            background-image: repeating-linear-gradient(90deg, #aaa, #aaa 8px, transparent 8px, transparent 12px);
+        }
+        .legend-text {
+            font-size: 13px;
+            color: #333;
+        }
+        .performance-box {
+            background: #f9f9f9;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .performance-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 12px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .metric-card.rank1 {
+            background: #e8e8e8;
+            border-color: #000;
+            border-width: 2px;
+        }
+        .metric-model {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .metric-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+        }
+        .metric-rank {
+            font-size: 10px;
+            color: #999;
+            margin-top: 3px;
+        }
+        .interpretation-box {
+            background: #f9f9f9;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .interpretation-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 12px;
+        }
+        .interpretation-text {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">대규모 복잡 시계열에서의 모형 비교 (5,000 샘플)</div>
+
+        <div class="performance-box">
+            <div class="performance-title">모형 성능 비교 (RMSE)</div>
+            <div class="performance-grid">
+                <div class="metric-card rank1">
+                    <div class="metric-model">LSTM 다변량</div>
+                    <div class="metric-value">27.27</div>
+                    <div class="metric-rank">1위</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-model">SARIMA</div>
+                    <div class="metric-value">29.29</div>
+                    <div class="metric-rank">2위</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-model">Prophet</div>
+                    <div class="metric-value">42.90</div>
+                    <div class="metric-rank">3위</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-model">LSTM 단변량</div>
+                    <div class="metric-value">100.17</div>
+                    <div class="metric-rank">4위</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <svg viewBox="0 0 1000 400">
+                <defs>
+                    <clipPath id="dataClip">
+                        <rect x="80" y="20" width="880" height="330"/>
+                    </clipPath>
+                </defs>
+
+                <!-- Grid lines -->
+                <g class="grid">
+                    <line x1="80" y1="70" x2="960" y2="70" class="grid-line"/>
+                    <line x1="80" y1="130" x2="960" y2="130" class="grid-line"/>
+                    <line x1="80" y1="190" x2="960" y2="190" class="grid-line"/>
+                    <line x1="80" y1="250" x2="960" y2="250" class="grid-line"/>
+                    <line x1="80" y1="310" x2="960" y2="310" class="grid-line"/>
+                </g>
+
+                <!-- Highlight region for rapid change -->
+                <rect x="400" y="20" width="200" height="330" class="highlight-region"/>
+                <text x="500" y="15" text-anchor="middle" class="annotation-text">급격한 변동 구간</text>
+
+                <!-- Test start line -->
+                <line x1="780" y1="20" x2="780" y2="350" stroke="#999" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="780" y="365" text-anchor="middle" class="tick-label" font-weight="bold">↑ 테스트 시작 (학습 4,000 / 테스트 1,000)</text>
+
+                <!-- Data lines with clipping -->
+                <g clip-path="url(#dataClip)">
+                    <!-- Actual values (complex nonlinear pattern) -->
+                    <path d="M 80 280 Q 140 275 200 260 T 280 240 Q 320 220 360 180 T 440 90 Q 480 70 520 85 T 600 140 Q 640 160 680 180 T 760 210 Q 800 220 840 235 T 920 260 L 960 270"
+                          class="line-actual"/>
+
+                    <!-- LSTM Multivariate (best fit - closest to actual in volatile region) -->
+                    <path d="M 780 210 Q 810 217 830 228 T 870 248 Q 900 258 930 265 L 960 272"
+                          class="line-lstm-multi"/>
+
+                    <!-- SARIMA (good but misses some nonlinear features) -->
+                    <path d="M 780 210 Q 810 220 830 232 T 870 255 Q 900 268 930 278 L 960 285"
+                          class="line-sarima"/>
+
+                    <!-- Prophet (struggles with nonlinearity) -->
+                    <path d="M 780 210 Q 810 225 830 245 T 870 280 Q 900 295 930 305 L 960 310"
+                          class="line-prophet"/>
+                </g>
+
+                <!-- Annotation boxes -->
+                <rect x="350" y="95" width="150" height="30" class="annotation-box"/>
+                <text x="425" y="110" text-anchor="middle" class="annotation-text">급격한 상승</text>
+                <text x="425" y="122" text-anchor="middle" class="annotation-text" font-size="10">LSTM이 더 정확</text>
+
+                <!-- Axes -->
+                <line x1="80" y1="350" x2="960" y2="350" class="axis-line"/>
+                <line x1="80" y1="20" x2="80" y2="350" class="axis-line"/>
+
+                <!-- Y-axis labels -->
+                <text x="70" y="75" text-anchor="end" class="tick-label">300</text>
+                <text x="70" y="135" text-anchor="end" class="tick-label">250</text>
+                <text x="70" y="195" text-anchor="end" class="tick-label">200</text>
+                <text x="70" y="255" text-anchor="end" class="tick-label">150</text>
+                <text x="70" y="315" text-anchor="end" class="tick-label">100</text>
+
+                <!-- Y-axis label -->
+                <text x="25" y="190" text-anchor="middle" class="axis-label" transform="rotate(-90 25 190)">
+                    시계열 값
+                </text>
+
+                <!-- X-axis labels -->
+                <text x="80" y="375" text-anchor="middle" class="tick-label">0</text>
+                <text x="280" y="375" text-anchor="middle" class="tick-label">1000</text>
+                <text x="480" y="375" text-anchor="middle" class="tick-label">2000</text>
+                <text x="680" y="375" text-anchor="middle" class="tick-label">3000</text>
+                <text x="780" y="375" text-anchor="middle" class="tick-label">4000</text>
+                <text x="880" y="375" text-anchor="middle" class="tick-label">4500</text>
+                <text x="960" y="375" text-anchor="middle" class="tick-label">5000</text>
+
+                <!-- X-axis label -->
+                <text x="520" y="395" text-anchor="middle" class="axis-label">시점 (샘플 번호)</text>
+            </svg>
+        </div>
+
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-line actual"></div>
+                <span class="legend-text">실제값 (복잡한 비선형 패턴)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line lstm"></div>
+                <span class="legend-text">LSTM 다변량 (온도+경제지표) - 1위</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line sarima"></div>
+                <span class="legend-text">SARIMA - 2위</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line prophet"></div>
+                <span class="legend-text">Prophet - 3위</span>
+            </div>
+        </div>
+
+        <div class="interpretation-box">
+            <div class="interpretation-title">해석</div>
+            <div class="interpretation-text">
+                이 그림은 5,000개 샘플의 대규모 복잡 시계열에서 네 모형의 예측 성능을 비교한다. 실제값(검정 실선)은 비선형 추세, 다중 계절성, 외생 변수의 비선형 효과를 포함한 복잡한 패턴을 보인다.<br><br>
+
+                <strong>LSTM 다변량(진한 회색 점선)</strong>이 실제값에 가장 근접하며, 특히 급격한 변동 구간(회색 음영)에서 SARIMA보다 우수한 추적 성능을 보인다. 온도와 경제 지표를 외생 변수로 활용하고, 이들의 비선형 효과(U자형 영향, 임계값 효과)와 상호작용을 데이터로부터 학습할 수 있기 때문이다. 4,000개의 학습 샘플은 3-layer LSTM(약 10만 파라미터)을 학습하기에 충분했다.<br><br>
+
+                <strong>SARIMA(중간 회색 점선)</strong>는 2위를 기록했으나, 급격한 변동 구간에서 실제값과의 괴리가 커진다. 외생 변수를 선형 회귀자로만 취급하므로 비선형 효과를 포착하지 못한다.<br><br>
+
+                <strong>Prophet(연한 회색 점선)</strong>은 3위로, 테스트 구간에서 실제값을 과대예측하는 경향을 보인다. 온도를 회귀자로 추가했음에도 비선형 효과를 학습할 수 없어 SARIMA보다 낮은 성능을 보였다.<br><br>
+
+                이 결과는 <strong>"데이터가 충분히 많고, 비선형 패턴이나 다변량 입력이 중요하며, 복잡한 시계열 간 상호작용을 포착해야 할 때"</strong> LSTM이 강점을 발휘함을 보여준다. 반면 420개 샘플의 CO₂ 데이터에서는 LSTM이 최하위였으므로, 모형 선택은 데이터 특성과 문제 맥락에 따라 달라져야 한다.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

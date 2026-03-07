@@ -1,0 +1,19 @@
+graph LR
+    subgraph 원본["원본 공간 (2D)"]
+        D1["●○●○<br/><b>선형 분리 불가</b>"]
+    end
+
+    subgraph 변환["커널 함수"]
+        K["<b>φ(x)</b><br/>고차원 매핑"]
+    end
+
+    subgraph 고차원["변환 공간 (3D)"]
+        D2["● ●<br/>━━━━━<br/>○ ○<br/><b>선형 분리 가능</b>"]
+    end
+
+    D1 -->|"RBF, 다항식 등"| K
+    K -->|"차원 확장"| D2
+
+    style D1 fill:#ffcdd2,stroke:#d32f2f
+    style K fill:#fff3e0,stroke:#f57c00
+    style D2 fill:#c8e6c9,stroke:#388e3c
