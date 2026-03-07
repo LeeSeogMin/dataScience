@@ -17,3 +17,7 @@ practice/**/tmpclaude-*
 .ipynb_checkpoints/
 .idea/
 .vscode/
+
+# Large data files
+practice/chapter10/data/cifar-10-python.tar.gz
+*.tar.gz
