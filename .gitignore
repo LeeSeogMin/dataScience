@@ -18,6 +18,13 @@ practice/**/tmpclaude-*
 .idea/
 .vscode/
 
+# Local-only source and planning docs
+docs/
+content/
+AGENTS.md
+github.md
+강의계획서.md
+
 # Large data files
 practice/chapter10/data/cifar-10-python.tar.gz
 *.tar.gz
