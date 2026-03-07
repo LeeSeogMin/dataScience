@@ -8,7 +8,7 @@
     python 1-4-llm-eda.py
 
 필수 환경 변수:
-    ANTHROPIC_API_KEY: Claude API 키
+    OPENAI_API_KEY: OpenAI API 키
 """
 
 import os
@@ -174,19 +174,23 @@ def generate_llm_insights(profile: dict, use_api: bool = True) -> str:
 
     if use_api:
         try:
-            import anthropic
+            from openai import OpenAI
 
-            client = anthropic.Anthropic()
+            client = OpenAI()
 
-            response = client.messages.create(
-                model="claude-sonnet-4-20250514",
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
                 max_tokens=1500,
                 messages=[
-                    {"role": "user", "content": prompt}
-                ]
+                    {
+                        "role": "system",
+                        "content": "당신은 데이터 분석 전문가다. 제공된 데이터 프로파일만 바탕으로 신중하고 구조화된 EDA 인사이트를 작성한다."
+                    },
+                    {"role": "user", "content": prompt},
+                ],
             )
 
-            return response.content[0].text
+            return response.choices[0].message.content.strip()
 
         except Exception as e:
             print(f"API 호출 실패: {e}")
@@ -380,11 +384,11 @@ def compare_traditional_vs_llm_eda():
 
 if __name__ == "__main__":
     # API 키 확인
-    api_key = os.getenv("ANTHROPIC_API_KEY")
+    api_key = os.getenv("OPENAI_API_KEY")
     use_api = api_key is not None and len(api_key) > 0
 
     if not use_api:
-        print("경고: ANTHROPIC_API_KEY가 설정되지 않음. 규칙 기반 분석 사용.")
+        print("경고: OPENAI_API_KEY가 설정되지 않음. 규칙 기반 분석 사용.")
 
     # 1. Iris 데이터셋으로 LLM EDA 실행
     result = run_llm_eda("iris", use_api=use_api)
