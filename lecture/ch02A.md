@@ -80,9 +80,9 @@ pip install sentence-transformers  # 실습 4
 
 결측은 **왜 비었는가**에 따라 처리 전략이 달라진다. 시험 답안지로 비유하면:
 
-- **MCAR**: 답안지가 우연히 찢어져 일부가 사라짐
-- **MAR**: 특정 반 학생들만 더 많이 빠뜨림
-- **MNAR**: 어려운 문항이라 일부러 비워 둠
+- **MCAR**(Missing Completely At Random): 답안지가 우연히 찢어져 일부가 사라짐
+- **MAR**(Missing At Random): 특정 반 학생들만 더 많이 빠뜨림
+- **MNAR**(Missing Not At Random): 어려운 문항이라 일부러 비워 둠
 
 | 유형 | 뜻 | 직관적 예시 | 처리 방향 |
 | ---- | --- | ------------ | --------- |
