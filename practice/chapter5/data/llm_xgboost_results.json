@@ -1,0 +1,49 @@
+{
+  "dataset": "ecommerce_purchase_prediction",
+  "n_train": 1600,
+  "n_test": 400,
+  "purchase_rate": 0.3055,
+  "tabular_feature_count": 13,
+  "tabular_feature_names": [
+    "age",
+    "total_purchase_amount",
+    "visit_count",
+    "cart_item_count",
+    "days_since_last_visit",
+    "avg_session_duration",
+    "membership_bronze",
+    "membership_gold",
+    "membership_platinum",
+    "membership_silver",
+    "device_desktop",
+    "device_mobile",
+    "device_tablet"
+  ],
+  "text_columns": [
+    "review_text",
+    "inquiry_text",
+    "search_keywords"
+  ],
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dim": 384,
+  "pca_components": 50,
+  "pca_explained_variance_ratio_sum": 0.9781674742698669,
+  "embedding_extraction_time_sec": 4.3,
+  "metrics": {
+    "tabular": {
+      "accuracy": 0.66,
+      "roc_auc": 0.5579077721429414,
+      "f1_score": 0.19047619047619047
+    },
+    "hybrid": {
+      "accuracy": 0.645,
+      "roc_auc": 0.6508432598183749,
+      "f1_score": 0.2755102040816326
+    },
+    "improvement": {
+      "accuracy": -0.015,
+      "roc_auc": 0.0929,
+      "f1_score": 0.085
+    }
+  }
+}

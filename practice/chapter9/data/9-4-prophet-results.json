@@ -1,0 +1,13 @@
+{
+  "model": "Prophet",
+  "seasonality_mode": "additive",
+  "train_size": 420,
+  "test_size": 106,
+  "rmse_additive": 0.865,
+  "mape_additive": 0.19,
+  "rmse_multiplicative": 0.8685,
+  "mape_multiplicative": 0.2,
+  "best_rmse": 0.865,
+  "best_mape": 0.19,
+  "num_changepoints": 25
+}

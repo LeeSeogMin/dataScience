@@ -1,0 +1,84 @@
+{
+  "model_config": {
+    "dimensions": 64,
+    "walk_length": 30,
+    "num_walks": 200,
+    "p": 1,
+    "q": 1
+  },
+  "graph_info": {
+    "nodes": 34,
+    "edges": 78
+  },
+  "similar_nodes": {
+    "0": [
+      [
+        17,
+        0.7886
+      ],
+      [
+        11,
+        0.7276
+      ],
+      [
+        10,
+        0.7155
+      ],
+      [
+        1,
+        0.7121
+      ],
+      [
+        4,
+        0.705
+      ]
+    ],
+    "33": [
+      [
+        32,
+        0.868
+      ],
+      [
+        22,
+        0.8509
+      ],
+      [
+        20,
+        0.8447
+      ],
+      [
+        14,
+        0.839
+      ],
+      [
+        15,
+        0.7966
+      ]
+    ]
+  },
+  "pq_comparison": [
+    {
+      "name": "DeepWalk (p=1, q=1)",
+      "p": 1,
+      "q": 1,
+      "ari_score": 0.5998
+    },
+    {
+      "name": "BFS-like (p=0.5, q=2)",
+      "p": 0.5,
+      "q": 2,
+      "ari_score": 0.5998
+    },
+    {
+      "name": "DFS-like (p=2, q=0.5)",
+      "p": 2,
+      "q": 0.5,
+      "ari_score": 0.5998
+    }
+  ],
+  "interpretation": {
+    "p_meaning": "p가 작으면 출발 노드 근처 탐색 (BFS-like)",
+    "q_meaning": "q가 작으면 멀리 탐색 (DFS-like)",
+    "deepwalk": "p=q=1은 균형 잡힌 랜덤 워크 (DeepWalk)"
+  }
+}

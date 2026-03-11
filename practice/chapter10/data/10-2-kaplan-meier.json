@@ -1,0 +1,31 @@
+{
+  "data_summary": {
+    "total_observations": 432,
+    "events": 114,
+    "censored": 318,
+    "observation_period_weeks": 52
+  },
+  "overall_survival": {
+    "median_survival_time": null,
+    "survival_at_12_weeks": 0.9560185185185185,
+    "survival_at_26_weeks": 0.8749999999999999,
+    "survival_at_52_weeks": 0.7361111111111108
+  },
+  "group_comparison": {
+    "fin_yes": {
+      "n": 216,
+      "events": 48,
+      "survival_at_52_weeks": 0.7777777777777775
+    },
+    "fin_no": {
+      "n": 216,
+      "events": 66,
+      "survival_at_52_weeks": 0.6944444444444441
+    }
+  },
+  "logrank_test": {
+    "test_statistic": 3.837569576549049,
+    "p_value": 0.0501161174090059,
+    "significant": false
+  }
+}

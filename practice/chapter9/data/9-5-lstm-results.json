@@ -1,0 +1,32 @@
+{
+  "model": "LSTM",
+  "data": {
+    "frequency": "monthly",
+    "n_observations": 526,
+    "train_size": 420,
+    "test_size": 106
+  },
+  "architecture": {
+    "input_size": 1,
+    "hidden_size": 64,
+    "num_layers": 2,
+    "seq_length": 24,
+    "total_params": 50497
+  },
+  "training": {
+    "epochs": 100,
+    "batch_size": 32,
+    "learning_rate": 0.001,
+    "final_loss": 0.001552
+  },
+  "performance": {
+    "rmse": 7.9537,
+    "mape": 1.97
+  },
+  "error_stats": {
+    "mean": 7.1826,
+    "std": 3.4165,
+    "min": -0.7001,
+    "max": 14.3113
+  }
+}

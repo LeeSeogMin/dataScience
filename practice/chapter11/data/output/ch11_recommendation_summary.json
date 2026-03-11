@@ -1,0 +1,104 @@
+{
+  "dataset": {
+    "name": "MovieLens 100K",
+    "n_users": 943,
+    "n_items": 1682,
+    "n_ratings": 100000,
+    "sparsity": 0.937
+  },
+  "model_comparison": {
+    "SVD": {
+      "rmse_mean": 0.9321,
+      "rmse_std": 0.0023,
+      "mae_mean": 0.7344,
+      "mae_std": 0.0022
+    },
+    "User-KNN": {
+      "rmse_mean": 0.9548,
+      "rmse_std": 0.0046,
+      "mae_mean": 0.754,
+      "mae_std": 0.0033
+    },
+    "Item-KNN": {
+      "rmse_mean": 0.9429,
+      "rmse_std": 0.0036,
+      "mae_mean": 0.7413,
+      "mae_std": 0.0029
+    }
+  },
+  "best_model": "SVD",
+  "svd_factors": {
+    "user_factors_shape": [
+      943,
+      50
+    ],
+    "item_factors_shape": [
+      1682,
+      50
+    ],
+    "user_factors_mean": 0.0,
+    "user_factors_std": 0.1447,
+    "item_factors_mean": 0.0003,
+    "item_factors_std": 0.128
+  },
+  "cold_start_analysis": {
+    "users_with_less_than_5_ratings": 0,
+    "users_with_less_than_10_ratings": 0,
+    "items_with_less_than_5_ratings": 333,
+    "items_with_less_than_10_ratings": 530,
+    "avg_ratings_per_user": 106.04,
+    "avg_ratings_per_item": 59.45,
+    "median_ratings_per_user": 65,
+    "median_ratings_per_item": 27
+  },
+  "sample_recommendations": {
+    "user_id": "1",
+    "top_10": [
+      {
+        "item_id": "483",
+        "predicted_rating": 4.6584
+      },
+      {
+        "item_id": "427",
+        "predicted_rating": 4.6504
+      },
+      {
+        "item_id": "657",
+        "predicted_rating": 4.6249
+      },
+      {
+        "item_id": "603",
+        "predicted_rating": 4.5944
+      },
+      {
+        "item_id": "408",
+        "predicted_rating": 4.5751
+      },
+      {
+        "item_id": "302",
+        "predicted_rating": 4.5637
+      },
+      {
+        "item_id": "484",
+        "predicted_rating": 4.5549
+      },
+      {
+        "item_id": "512",
+        "predicted_rating": 4.5422
+      },
+      {
+        "item_id": "511",
+        "predicted_rating": 4.5247
+      },
+      {
+        "item_id": "709",
+        "predicted_rating": 4.4794
+      }
+    ]
+  },
+  "interpretation": {
+    "svd_advantage": "희소 행렬을 저차원 잠재 공간으로 분해하여 확장성 확보",
+    "knn_advantage": "직관적이고 설명 가능한 추천 (이 상품을 본 고객이...)",
+    "cold_start": "신규 사용자/아이템에 대한 추천이 어려움"
+  }
+}

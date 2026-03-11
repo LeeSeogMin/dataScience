@@ -42,7 +42,7 @@ def main():
 
     # 의사결정나무 모델 학습
     dt_model = DecisionTreeClassifier(
-        max_depth=4,
+        max_depth=2,
         random_state=42
     )
     dt_model.fit(X_train, y_train)
@@ -78,17 +78,23 @@ def main():
     plt.figure(figsize=(20, 12))
     plot_tree(
         dt_model,
-        feature_names=['Sex', '3rd_class', 'Age', '1st_class'],
-        class_names=['Dead', 'Survived'],
+        feature_names=['성별', '3등석', '나이', '1등석'],
+        class_names=['사망', '생존'],
         filled=True,
         rounded=True,
-        fontsize=10
+        fontsize=18,
+        impurity=False,
+        label='none',     # 'samples=', 'value=' 등의 텍스트 라벨 제거
+        precision=0       # 소수점 제거
     )
-    plt.title('Titanic Survival Prediction Decision Tree', fontsize=14)
+    plt.title('타이타닉 생존 예측 의사결정나무 (Simplified)', fontsize=16)
     plt.tight_layout()
-    plt.savefig('titanic_decision_tree.png', dpi=150, bbox_inches='tight')
+    
+    # 저장 경로 설정 (diagram 폴더)
+    save_path = Path(__file__).parent.parent.parent / "diagram" / "3-4-titanic-decision-tree.png"
+    plt.savefig(save_path, dpi=300, bbox_inches='tight')
     plt.close()
-    print("저장 완료: titanic_decision_tree.png")
+    print(f"저장 완료: {save_path}")
 
     # 승객 그룹별 생존율 분석
     print("\n[7] 주요 인사이트")

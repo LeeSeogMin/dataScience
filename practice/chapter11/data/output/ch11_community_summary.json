@@ -1,0 +1,125 @@
+{
+  "algorithm": "Louvain",
+  "graph_info": {
+    "nodes": 34,
+    "edges": 78
+  },
+  "result": {
+    "n_communities": 4,
+    "modularity": 0.4439
+  },
+  "community_stats": [
+    {
+      "community_id": 0,
+      "size": 11,
+      "nodes": [
+        0,
+        1,
+        2,
+        3,
+        7,
+        11,
+        12,
+        13,
+        17,
+        19,
+        21
+      ],
+      "internal_edges": 23,
+      "density": 0.4182,
+      "avg_degree": 4.18
+    },
+    {
+      "community_id": 1,
+      "size": 5,
+      "nodes": [
+        4,
+        5,
+        6,
+        10,
+        16
+      ],
+      "internal_edges": 6,
+      "density": 0.6,
+      "avg_degree": 2.4
+    },
+    {
+      "community_id": 2,
+      "size": 4,
+      "nodes": [
+        24,
+        25,
+        28,
+        31
+      ],
+      "internal_edges": 4,
+      "density": 0.6667,
+      "avg_degree": 2.0
+    },
+    {
+      "community_id": 3,
+      "size": 14,
+      "nodes": [
+        8,
+        9,
+        14,
+        15,
+        18,
+        20,
+        22,
+        23,
+        26,
+        27,
+        29,
+        30,
+        32,
+        33
+      ],
+      "internal_edges": 26,
+      "density": 0.2857,
+      "avg_degree": 3.71
+    }
+  ],
+  "ground_truth_comparison": {
+    "detected_communities": 4,
+    "accuracy_vs_ground_truth": 0.8235,
+    "mr_hi_group_size": 17,
+    "officer_group_size": 17
+  },
+  "resolution_analysis": [
+    {
+      "resolution": 0.5,
+      "n_communities": 5,
+      "modularity": 0.4272
+    },
+    {
+      "resolution": 0.8,
+      "n_communities": 5,
+      "modularity": 0.4272
+    },
+    {
+      "resolution": 1.0,
+      "n_communities": 4,
+      "modularity": 0.4439
+    },
+    {
+      "resolution": 1.2,
+      "n_communities": 4,
+      "modularity": 0.4449
+    },
+    {
+      "resolution": 1.5,
+      "n_communities": 5,
+      "modularity": 0.4354
+    },
+    {
+      "resolution": 2.0,
+      "n_communities": 7,
+      "modularity": 0.3457
+    }
+  ],
+  "interpretation": {
+    "modularity_meaning": "0.3 이상이면 유의미한 커뮤니티 구조",
+    "karate_club_context": "두 리더(Mr. Hi, Officer) 간 갈등으로 실제 분열된 사례"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "graph_info": {
+    "original_edges": 78,
+    "train_edges": 63,
+    "test_edges": 15,
+    "negative_samples": 15
+  },
+  "evaluation_results": {
+    "common_neighbors": {
+      "auc_roc": 0.6844,
+      "avg_precision": 0.6126
+    },
+    "jaccard": {
+      "auc_roc": 0.6244,
+      "avg_precision": 0.5636
+    },
+    "adamic_adar": {
+      "auc_roc": 0.6956,
+      "avg_precision": 0.7063
+    },
+    "preferential_attachment": {
+      "auc_roc": 0.7067,
+      "avg_precision": 0.6296
+    }
+  },
+  "best_method": "preferential_attachment",
+  "example": {
+    "node_pair": [
+      17,
+      15
+    ],
+    "common_neighbors": []
+  },
+  "interpretation": {
+    "auc_meaning": "0.5=랜덤, 1.0=완벽한 예측",
+    "common_neighbors": "공통 이웃 수가 많을수록 연결 가능성 높음",
+    "jaccard": "공통 이웃 비율로 정규화",
+    "adamic_adar": "희귀한 공통 이웃에 더 높은 가중치"
+  }
+}

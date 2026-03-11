@@ -1,0 +1,38 @@
+{
+  "data_summary": {
+    "total": 5000,
+    "n_features": 20,
+    "train": 3500,
+    "val": 750,
+    "test": 750,
+    "event_rate": 0.4436,
+    "events_test": 332
+  },
+  "model_architecture": {
+    "input_features": 20,
+    "hidden_layers": [
+      64,
+      32,
+      16
+    ],
+    "dropout": 0.2
+  },
+  "training": {
+    "epochs_trained": 46,
+    "max_epochs": 150,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 128
+  },
+  "performance": {
+    "cox_val_c_index": 0.6025236861112291,
+    "cox_test_c_index": 0.619280668938598,
+    "deepsurv_val_c_index": 0.668521901686706,
+    "deepsurv_test_c_index": 0.6991996993534391,
+    "improvement_pp": 7.991903041484106
+  },
+  "training_history": {
+    "final_train_loss": 3.5205147692135403,
+    "final_val_c_index": 0.6665760292305731
+  }
+}

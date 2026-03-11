@@ -1,0 +1,4 @@
+model,rmse_mean,rmse_std,mae_mean,mae_std
+SVD,0.9321,0.0023,0.7344,0.0022
+User-KNN,0.9548,0.0046,0.754,0.0033
+Item-KNN,0.9429,0.0036,0.7413,0.0029

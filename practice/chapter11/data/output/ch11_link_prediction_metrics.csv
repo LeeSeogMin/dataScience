@@ -1,0 +1,5 @@
+method,auc_roc,avg_precision
+common_neighbors,0.6844,0.6126
+jaccard,0.6244,0.5636
+adamic_adar,0.6956,0.7063
+preferential_attachment,0.7067,0.6296
