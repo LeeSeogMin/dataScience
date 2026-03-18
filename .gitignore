@@ -25,6 +25,7 @@ diagram/
 AGENTS.md
 github.md
 강의계획서.md
+lecture/ch*B.md
 
 # Large data files
 practice/chapter10/data/cifar-10-python.tar.gz
