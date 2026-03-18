@@ -130,6 +130,10 @@ print(f"OOB Score: {model.oob_score_:.4f}")
 - 특성 중요도(MDI)에서 MedInc(중위소득)이 1위인 이유: 소득이 주택 가격의 가장 강력한 예측 변수
 - 특성 중요도의 합은 1이 된다. AveOccup 같은 특성의 중요도가 낮은 이유는?
 
+![랜덤 포레스트 OOB 오차 수렴](../diagram/rf_oob_convergence.png)
+
+![특성 중요도](../diagram/rf_feature_importance.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 1**: max_features 변경으로 다양성-정확도 트레이드오프 관찰
@@ -154,6 +158,8 @@ print(f"OOB Score: {model.oob_score_:.4f}")
 ### 5.3 그래디언트 부스팅
 
 그래디언트 부스팅은 이전 모델의 **잔차(오차)**를 새로운 모델이 학습하는 방식으로 순차적으로 성능을 개선한다. 비유하면, 첫 시험에서 틀린 문제를 정리하고, 다음 시험에서 그 부분을 집중 공부하는 것과 같다.
+
+![경사하강법](../diagram/5-1-gradient.png)
 
 #### 3대 라이브러리
 
@@ -212,6 +218,10 @@ cat_model = CatBoostRegressor(iterations=200, depth=6, learning_rate=0.1, verbos
 - CatBoost가 가장 느린 이유: 대칭 트리 구조의 학습 비용. 대신 추론(예측) 시에는 가장 빠름
 - 어떤 상황에서 어떤 라이브러리를 선택하겠는가?
 
+![성능 비교](../diagram/boosting_comparison.png)
+
+![학습 시간 비교](../diagram/boosting_training_time.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 2**: learning_rate 변경 실험
@@ -245,6 +255,8 @@ cat_model = CatBoostRegressor(iterations=200, depth=6, learning_rate=0.1, verbos
 | 베이지안 최적화 | 이전 결과 기반 지능적 선택 | 높음 | 학습 비용 큰 모델 |
 
 **Optuna**: 베이지안 최적화 기반 프레임워크. "좋은 결과가 나왔던 영역을 더 집중 탐색"하여 효율적으로 최적 파라미터를 찾는다. 성능이 낮은 시도는 중간에 자동 중단(Pruning)하여 시간을 절약한다.
+
+![하이퍼 파라미터 튜닝 비교](../diagram/5-tuning.png)
 
 **XGBoost 튜닝 우선순위**:
 1. 높음: learning_rate (0.01-0.3), max_depth (3-10), n_estimators (100-1000)
@@ -306,6 +318,8 @@ study.optimize(objective, n_trials=30)
 - `cross_val_score`로 5-fold CV를 사용하는 이유: 단일 train/test 분할보다 안정적인 성능 추정
 - 시각화(`optuna_optimization_history.png`)에서 초기에 RMSE 변동이 크고 후반에 수렴하는 이유: 초기에는 넓게 탐색, 후반에는 좋은 영역을 집중 탐색
 
+![Optuna 최적화 히스토리](../diagram/optuna_optimization_history.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 3**: 조기 종료를 활용한 XGBoost 튜닝
@@ -340,6 +354,18 @@ study.optimize(objective, n_trials=30)
 **PDP(부분 의존도)**: "특정 특성을 변화시킬 때 예측의 평균적 변화"를 보여주는 전역 해석 도구.
 
 **ICE(개별 조건 기대)**: PDP의 개별 버전. 각 샘플별 곡선으로 이질성과 상호작용을 확인한다.
+
+![SHAP 요약](../diagram/shap_summary_bar.png)
+
+![SHAP 분포 및 방향성](../diagram/shap_summary_dot.png)
+
+![SHAP Dependence Plot](../diagram/shap_dependence_top_feature.png)
+
+![SHAP Waterfall Plot](../diagram/shap_waterfall_sample0.png)
+
+![SHAP Force Plot](../diagram/shap_force_sample0.png)
+
+![PDP/ICE](../diagram/pdp_ice_top_feature.png)
 
 ---
 
@@ -564,6 +590,10 @@ X_hybrid_train = np.hstack([X_tab_train, emb_train_reduced])
 - Accuracy는 하락했지만 ROC AUC와 F1은 개선된 이유: 임베딩이 확률 순위와 양성 탐지에는 기여하지만, 임계값 0.5 기준의 정확도에는 노이즈로 작용 가능
 - F1이 크게 개선된 이유: 리뷰 감정, 검색 키워드의 구매 의도, 문의 내용 등 텍스트 신호가 양성(구매) 탐지에 실질적 정보 제공
 - PCA로 384→50으로 축소해도 분산 97%+가 보존되는 이유: 임베딩 차원 간 상관이 높아 정보가 소수 주성분에 집중
+
+![LLM+XGBoost 성능 비교](../diagram/llm_xgboost_metrics.png)
+
+![특성 중요도](../diagram/llm_xgboost_feature_importance.png)
 
 #### Step 3 — 직접 코딩
 

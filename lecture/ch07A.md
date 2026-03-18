@@ -38,6 +38,8 @@ pip install torch xgboost pytorch-tabnet scikit-learn numpy pandas matplotlib
 
 해결책은 **은닉층(hidden layer)**을 추가하는 것이다. 은닉층의 뉴런들이 입력 공간을 비선형으로 변환하면, 출력층은 변환된 공간에서 선형 분류를 수행한다. 비유하자면, 구겨진 종이를 펴서 직선을 긋는 것과 같다. **보편 근사 정리**에 따르면 뉴런을 충분히 많이 쓰면 어떤 복잡한 패턴이든 학습할 수 있다. 레고 블록을 충분히 모으면 어떤 형태든 만들 수 있는 것과 같다.
 
+![신경망과 은닉층](../diagram/7-2.png)
+
 #### 활성화 함수: 비선형성의 핵심
 
 활성화 함수가 없으면 여러 층을 쌓아도 결국 하나의 선형 변환에 불과하다. 활성화 함수가 비선형성을 도입하여 복잡한 함수를 표현할 수 있게 한다.
@@ -51,6 +53,10 @@ pip install torch xgboost pytorch-tabnet scikit-learn numpy pandas matplotlib
 | GELU | x·Φ(x) | Transformer에서 우수 | 계산 복잡 |
 
 **ReLU**가 현대 딥러닝의 기본인 이유: 양수 영역에서 기울기가 1로 일정하여 깊은 네트워크에서도 기울기가 잘 전파되고, 계산이 단순하다. 단, 음수 영역에서 기울기가 0이 되면 뉴런이 영원히 "죽는" 문제가 있어 Leaky ReLU로 보완한다.
+
+![활성화 함수](../diagram/7-3.png)
+
+![Sigmoid & ReLU 함수](../diagram/7-4.png)
 
 #### 역전파와 경사 하강법
 

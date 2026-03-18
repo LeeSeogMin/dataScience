@@ -120,6 +120,8 @@ HDBSCAN은 이 한계를 극복한다. 핵심 아이디어:
 
 비유하면, K-Means는 자를 대고 원을 그려 데이터를 나누지만, HDBSCAN은 데이터가 자연스럽게 몰려 있는 지형을 따라 경계를 그린다.
 
+![HDBSCAN 알고리즘 작동원리](../diagram/4-hdbscan.png)
+
 #### K-Means vs HDBSCAN 비교
 
 | 특성 | K-Means | HDBSCAN |
@@ -129,6 +131,8 @@ HDBSCAN은 이 한계를 극복한다. 핵심 아이디어:
 | 노이즈 처리 | 불가 (강제 할당) | 자동 탐지 (레이블 -1) |
 | 주요 파라미터 | n_clusters | min_cluster_size, min_samples |
 | 적합한 상황 | 구형 군집, K를 알 때 | 비구형, 노이즈 있을 때 |
+
+![K-Means vs HDBSCAN 비교](../diagram/4-3-kmeans-vs-hdbscan.png)
 
 ---
 
@@ -225,6 +229,8 @@ Sentence-BERT 같은 임베딩 모델은 대규모 텍스트에서 문맥을 학
 | 차원 | 수천~수만 | 384~768 |
 | "빨랐어요" vs "빠른 배달" | 다른 단어 → 거리 멀음 | 같은 의미 → 거리 가까움 |
 
+![임베딩 원리](../diagram/4-4-embedding-principle.png)
+
 #### 임베딩 + HDBSCAN 파이프라인
 
 고차원 임베딩(384차원)에서 직접 군집화하면 "차원의 저주"로 성능이 떨어진다. UMAP으로 10~50차원으로 축소한 후 HDBSCAN을 적용하는 것이 일반적이다.
@@ -300,6 +306,8 @@ labels, cluster_method = cluster_embeddings(embeddings_reduced)
 - HDBSCAN이 실제 5개 주제보다 적은 군집을 발견하는 이유: 의미적으로 유사한 주제(배송/서비스, 품질/만족도)가 하나로 합쳐짐
 - TF-IDF보다 임베딩의 ARI가 높은 이유: 임베딩이 "빨랐어요"와 "빠른 배달"의 의미적 유사성을 포착하기 때문
 - 40개 리뷰에서 ARI가 낮을 수 있는 이유: 데이터가 적으면 군집 구조가 불안정함
+
+![임베딩 군집화 결과](../diagram/4-4-embedding-clusters.png)
 
 #### Step 3 — 직접 코딩
 

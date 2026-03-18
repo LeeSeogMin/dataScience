@@ -266,6 +266,10 @@ model_add = Prophet(
 - `changepoint_prior_scale`을 높이면 어떻게 될까? (힌트: 더 많은 변화점 탐지, 과적합 위험)
 - 구성 요소 분해 그래프(`9-4-prophet-components.png`)에서 연간 계절성의 최고점과 최저점은 몇 월인가?
 
+![Prophet 구성 요소 분해](../diagram/9-4-prophet-components.png)
+
+![Prophet 예측 결과](../diagram/9-4-prophet-forecast.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 3**: changepoint_prior_scale 변경 실험
@@ -366,6 +370,10 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 - MinMaxScaler를 사용하는 이유는? (힌트: LSTM은 시그모이드/tanh 활성 함수를 사용하므로 입력 스케일에 민감)
 - Lookback 윈도우가 24개월인 이유는? (힌트: 연간 계절성을 포착하려면 최소 2주기 필요)
 - 학습 곡선(`9-5-lstm-loss.png`)에서 손실이 수렴하는 시점은 약 몇 에폭인가?
+
+![LSTM 학습 곡선](../diagram/9-5-lstm-loss.png)
+
+![LSTM 예측 결과](../diagram/9-5-lstm-forecast.png)
 
 #### Step 3 — 직접 코딩
 

@@ -457,6 +457,8 @@ topics_over_time = topic_model.topics_over_time(texts, timestamps, nr_bins=12)
 
 각 토픽의 **출현(emergence), 최고점(peak), 소멸(decline)** 시점을 자동으로 식별하여, 이슈의 흥망성쇠를 정량적으로 파악한다.
 
+![](../diagram/6-2-topic-lifecycle.png)
+
 ---
 
 ### 🔬 실습 4: BERTopic + 동적 토픽 분석 (한국어 뉴스)
