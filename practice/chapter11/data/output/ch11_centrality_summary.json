@@ -1,0 +1,155 @@
+{
+  "graph_info": {
+    "name": "Zachary's Karate Club",
+    "nodes": 34,
+    "edges": 78,
+    "density": 0.139
+  },
+  "top_nodes_by_centrality": {
+    "degree": [
+      {
+        "node": 33,
+        "score": 0.5152
+      },
+      {
+        "node": 0,
+        "score": 0.4848
+      },
+      {
+        "node": 32,
+        "score": 0.3636
+      },
+      {
+        "node": 2,
+        "score": 0.303
+      },
+      {
+        "node": 1,
+        "score": 0.2727
+      }
+    ],
+    "betweenness": [
+      {
+        "node": 0,
+        "score": 0.4376
+      },
+      {
+        "node": 33,
+        "score": 0.3041
+      },
+      {
+        "node": 32,
+        "score": 0.1452
+      },
+      {
+        "node": 2,
+        "score": 0.1437
+      },
+      {
+        "node": 31,
+        "score": 0.1383
+      }
+    ],
+    "closeness": [
+      {
+        "node": 0,
+        "score": 0.569
+      },
+      {
+        "node": 2,
+        "score": 0.5593
+      },
+      {
+        "node": 33,
+        "score": 0.55
+      },
+      {
+        "node": 31,
+        "score": 0.541
+      },
+      {
+        "node": 8,
+        "score": 0.5156
+      }
+    ],
+    "pagerank": [
+      {
+        "node": 33,
+        "score": 0.097
+      },
+      {
+        "node": 0,
+        "score": 0.0885
+      },
+      {
+        "node": 32,
+        "score": 0.0759
+      },
+      {
+        "node": 2,
+        "score": 0.0628
+      },
+      {
+        "node": 1,
+        "score": 0.0574
+      }
+    ]
+  },
+  "leader_analysis": {
+    "node_0": {
+      "degree": 0.4848,
+      "betweenness": 0.4376,
+      "closeness": 0.569,
+      "pagerank": 0.0885,
+      "neighbors": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        10,
+        11,
+        12,
+        13,
+        17,
+        19,
+        21,
+        31
+      ],
+      "neighbor_count": 16
+    },
+    "node_33": {
+      "degree": 0.5152,
+      "betweenness": 0.3041,
+      "closeness": 0.55,
+      "pagerank": 0.097,
+      "neighbors": [
+        8,
+        9,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20,
+        23,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        22
+      ],
+      "neighbor_count": 17
+    }
+  },
+  "interpretation": {
+    "node_0": "Mr. Hi (강사) - 연결 중심성과 매개 중심성 모두 높음",
+    "node_33": "John A (회장) - 연결 중심성이 높고 별도 커뮤니티의 허브"
+  }
+}

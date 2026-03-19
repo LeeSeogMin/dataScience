@@ -206,6 +206,8 @@ vectorizer = CountVectorizer(
 
 BERTopic은 **"의미적으로 유사한 문서를 먼저 군집화하고, 그 후에 각 군집을 대표하는 키워드를 추출한다"**는 접근이다. LDA가 단어 빈도에 의존하는 것과 달리, 문맥을 반영한 임베딩을 사용한다.
 
+![](../diagram/6-process.svg)
+
 #### BERTopic 5단계 파이프라인
 
 비유하면, 도서관의 책을 정리하는 과정이다:
@@ -456,6 +458,8 @@ topics_over_time = topic_model.topics_over_time(texts, timestamps, nr_bins=12)
 #### 토픽 생명 주기 분석
 
 각 토픽의 **출현(emergence), 최고점(peak), 소멸(decline)** 시점을 자동으로 식별하여, 이슈의 흥망성쇠를 정량적으로 파악한다.
+
+![](../diagram/6-2-topic-lifecycle.png)
 
 ---
 

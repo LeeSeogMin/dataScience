@@ -36,7 +36,13 @@ pip install torch xgboost pytorch-tabnet scikit-learn numpy pandas matplotlib
 
 퍼셉트론은 가장 단순한 신경망이다. 입력에 가중치를 곱해 더한 뒤 활성화 함수를 적용한다: y = σ(Σwᵢxᵢ + b). 하지만 단층 퍼셉트론은 직선 하나로 분리 가능한 문제만 풀 수 있다. XOR 문제(두 입력이 다를 때만 1)처럼 직선으로 나눌 수 없는 문제는 풀지 못한다.
 
+![인공신경망](../diagram/7_bw.png)
+
 해결책은 **은닉층(hidden layer)**을 추가하는 것이다. 은닉층의 뉴런들이 입력 공간을 비선형으로 변환하면, 출력층은 변환된 공간에서 선형 분류를 수행한다. 비유하자면, 구겨진 종이를 펴서 직선을 긋는 것과 같다. **보편 근사 정리**에 따르면 뉴런을 충분히 많이 쓰면 어떤 복잡한 패턴이든 학습할 수 있다. 레고 블록을 충분히 모으면 어떤 형태든 만들 수 있는 것과 같다.
+
+![다층 퍼셉트론의 비선형 문제 해결](../diagram/7-1_bw.png)
+
+![신경망과 은닉층](../diagram/7-2.png)
 
 #### 활성화 함수: 비선형성의 핵심
 
@@ -51,6 +57,10 @@ pip install torch xgboost pytorch-tabnet scikit-learn numpy pandas matplotlib
 | GELU | x·Φ(x) | Transformer에서 우수 | 계산 복잡 |
 
 **ReLU**가 현대 딥러닝의 기본인 이유: 양수 영역에서 기울기가 1로 일정하여 깊은 네트워크에서도 기울기가 잘 전파되고, 계산이 단순하다. 단, 음수 영역에서 기울기가 0이 되면 뉴런이 영원히 "죽는" 문제가 있어 Leaky ReLU로 보완한다.
+
+![활성화 함수](../diagram/7-3.png)
+
+![Sigmoid & ReLU 함수](../diagram/7-4.png)
 
 #### 역전파와 경사 하강법
 
@@ -79,6 +89,8 @@ pip install torch xgboost pytorch-tabnet scikit-learn numpy pandas matplotlib
 | 미니배치 GD | 32~512개 | 효율과 안정의 균형 | 배치 크기 선택 필요 |
 
 실무에서는 GPU 메모리가 허용하는 최대 배치 크기에서 시작하여, 학습이 불안정하면 줄이는 방식을 권장한다.
+
+![배치 크기에 따른 경사 하강법 비교](../diagram/7-6-batch-comparison.png)
 
 ---
 
@@ -133,6 +145,8 @@ TabNet은 "단계별로 중요한 특성만 골라 쓰는 신경망"이다. 각 
 - Sparsemax: "A가 62.5%, B가 37.5%, C는 무시"
 
 이 명시적 선택 덕분에 어떤 특성이 예측에 사용되었는지 해석이 가능하다.
+
+![TabNet 아키텍처 다이어그램](../diagram/7-tab.png)
 
 | 파라미터 | 설명 | 권장값 |
 | -------- | ---- | ------ |
@@ -200,6 +214,8 @@ ft_transformer = FTTransformer(input_dim=X_train.shape[1], d_model=64, n_heads=4
 - Adult 데이터셋(약 45,000건, 14특성)에서 XGBoost가 가장 높은 성능을 보이는 이유는 무엇인가?
 - MLP, TabNet, FT-Transformer 모두 스케일링된 데이터를 사용하지만 XGBoost는 스케일링 없이도 작동한다. 왜 그런가? (힌트: 트리 기반 모델은 분할점 기반이라 스케일에 무관)
 - FT-Transformer의 학습 시간이 가장 긴 이유는? (힌트: 모든 특성 쌍의 상호작용을 Attention으로 계산)
+
+![FT-Transformer 아키텍처 다이어그램](../diagram/7-ft.png)
 
 #### Step 3 — 직접 코딩
 
@@ -353,6 +369,8 @@ latent_train = extract_latent(autoencoder, X_train_scaled, device)
 # 원본 + 잠재를 결합한 하이브리드 입력
 X_hybrid = np.hstack([X_train_scaled, latent_train])
 ```
+
+![오토인코더 구조](../diagram/7-3-autoencoder-nn.png)
 
 - 잠재 표현(32차원)만으로도 원본(100차원)의 몇 % 성능을 유지하는가?
 - 원본 + 잠재를 결합했을 때 성능이 향상되는 이유는? (힌트: 잠재 표현이 특성 간 비선형 관계를 압축 → 트리 모델이 활용하기 쉬운 형태로 변환)

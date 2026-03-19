@@ -1,0 +1,50 @@
+{
+  "dataset": {
+    "name": "FB15k-237",
+    "num_entities": 14541,
+    "num_relations": 237,
+    "train_triples": 272115,
+    "valid_triples": 17535,
+    "test_triples": 20466
+  },
+  "models": {
+    "TransE": {
+      "MRR": 0.164,
+      "Hits@1": 0.094,
+      "Hits@3": 0.176,
+      "Hits@10": 0.304,
+      "embedding_dim": 100,
+      "epochs": 100
+    },
+    "RotatE": {
+      "MRR": 0.238,
+      "Hits@1": 0.155,
+      "Hits@3": 0.263,
+      "Hits@10": 0.407,
+      "embedding_dim": 100,
+      "epochs": 100
+    }
+  },
+  "comparison": {
+    "mrr_diff": 0.074,
+    "better_model": "RotatE",
+    "interpretation": {
+      "TransE": "간단하고 효율적, 1:1 관계에 적합",
+      "RotatE": "복소 공간 회전으로 대칭/반대칭/역/합성 관계 모델링 가능"
+    }
+  },
+  "relation_patterns": {
+    "TransE": {
+      "symmetric": false,
+      "antisymmetric": true,
+      "inverse": false,
+      "composition": true
+    },
+    "RotatE": {
+      "symmetric": true,
+      "antisymmetric": true,
+      "inverse": true,
+      "composition": true
+    }
+  }
+}
