@@ -47,6 +47,8 @@ pip install scikit-surprise  # 추천 시스템
 | 노드(Node) | 분석 대상 개체 | 사용자, 제품, 웹페이지, 도시 |
 | 엣지(Edge) | 개체 간 관계 | 친구, 구매, 링크, 도로 |
 
+![노드와 엣지의 기본 구조](../diagram/11-1-node.png)
+
 #### 방향성과 가중치
 
 | 속성 | 설명 | 예시 |
@@ -55,6 +57,12 @@ pip install scikit-surprise  # 추천 시스템
 | 방향 그래프 | 엣지에 방향 있음 (A→B) | 트위터 팔로우, 웹 링크 |
 | 비가중치 그래프 | 엣지가 단순 연결만 표현 | 친구 여부 (있다/없다) |
 | 가중치 그래프 | 엣지에 강도/빈도 정보 포함 | 통화 횟수, 거래 금액 |
+
+![속성이 포함된 그래프 예시](../diagram/11-2-meta.png)
+
+![방향 그래프와 무방향 그래프의 비교](../diagram/11-3-direction.png)
+
+![가중치 그래프와 비가중치 그래프의 비교](../diagram/11-4-weight.png)
 
 #### 인접 행렬
 
@@ -161,6 +169,8 @@ centralities = {
 - 생성된 시각화(`ch11_centrality_comparison.png`)에서 노드 크기와 색상은 무엇을 나타내는가?
 - 노드 32가 모든 지표에서 상위 3위 안에 드는 이유는? (힌트: 두 리더를 연결하는 브리지 역할)
 
+![Karate Club 네트워크의 4가지 중심성 시각화](../diagram/ch11_centrality_comparison.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 1**: 특정 노드 제거 시 네트워크 영향 분석
@@ -265,6 +275,8 @@ modularity = community_louvain.modularity(partition, G)
 - 실제 분열과 82.4% 일치하는데, 나머지 17.6%는 왜 다른가? (힌트: 두 진영 사이 경계에 위치한 멤버)
 - 해상도(resolution)를 높이면 커뮤니티 수가 어떻게 변하는가?
 
+![Louvain 커뮤니티 탐지 결과](../diagram/ch11_community_detection.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 2**: 해상도 파라미터 시각화
@@ -344,6 +356,8 @@ neg_edges = generate_negative_samples(G_train, n_samples=len(test_edges))
 - AUC 0.5는 무작위 예측, 1.0은 완벽한 예측이다. 모든 지표가 0.6 이상이면 네트워크 구조가 예측에 유용하다는 뜻이다
 - Preferential Attachment의 AUC가 높은 이유: 허브 노드끼리 새로운 연결을 형성하는 경향
 - Adamic-Adar가 평균 정밀도에서 우수한 이유: 희귀 공통 이웃이 더 강한 예측 신호
+
+![링크 예측 예시](../diagram/ch11_link_prediction_example.png)
 
 #### Step 3 — 직접 코딩
 
@@ -460,6 +474,8 @@ similar = model.wv.most_similar(str(node), topn=5)
 - t-SNE 시각화에서 커뮤니티별로 점들이 묶여 있는지 확인한다
 - 작은 네트워크에서는 p, q 파라미터에 따른 차이가 크지 않을 수 있다. 대규모 네트워크에서는 차이가 커진다
 
+![Node2Vec 임베딩 t-SNE 시각화](../diagram/ch11_node2vec_tsne.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 5** (선택): 임베딩 차원 변경 실험
@@ -502,6 +518,8 @@ similar = model.wv.most_similar(str(node), topn=5)
 | 확장성 | 대규모 어려움 | 대규모 가능 |
 | 설명 가능성 | "비슷한 사용자가..." | 잠재 요인은 추상적 |
 | Cold-start | 취약 | 동일하게 취약 |
+
+![추천 시스템 성능 비교](../diagram/ch11_recommendation_comparison.png)
 
 #### 평가 지표
 

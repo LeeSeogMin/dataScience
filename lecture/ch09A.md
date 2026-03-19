@@ -75,6 +75,12 @@ pip install torch    # 실습 3 (LSTM)
 
 아이스크림 매출이 100만원일 때 여름 효과가 +20만원이고, 매출이 200만원으로 성장해도 여름 효과가 여전히 +20만원이면 **가법**. 매출에 비례하여 +40만원으로 커지면 **승법**이다.
 
+시각 자료: [시계열 분해 시각화](../content/graphics/ch09/9-2-3-decomposition-viz.html)
+
+![이동평균 시각화](../content/graphics/ch09/9-2-3-moving-average.png)
+
+![STL 분해 시각화](../content/graphics/ch09/9-2-3-stl-decomposition.png)
+
 ---
 
 ### 9.3 정상성과 차분: 예측을 위한 전처리
@@ -91,6 +97,8 @@ pip install torch    # 실습 3 (LSTM)
 - 귀무가설: "시계열이 비정상이다"
 - p-value < 0.05이면 귀무가설 기각 → 정상 시계열
 - p-value ≥ 0.05이면 비정상 → 차분 필요
+
+![정상성과 차분 시각화](../content/graphics/ch09/9-2-4-stationarity-diff.png)
 
 ---
 
@@ -115,6 +123,8 @@ ARIMA(p,d,q)는 세 가지 구성 요소의 조합이다:
 | 지수적 감소 | 지수적 감소 | ARMA(p,q) |
 
 **정보 기준으로 최종 선택**: AIC와 BIC 값이 낮을수록 좋은 모형. 적합도(우도)와 복잡도(파라미터 수) 사이의 균형을 추구한다.
+
+![ARIMA 시각화](../content/graphics/ch09/9-3-3-arima-viz.png)
 
 ---
 
@@ -167,6 +177,10 @@ result = model.fit(disp=False)
 - 1차 차분만으로도 정상성이 확보되는 이유는?
 - 계절 MA(1) 계수가 -0.842로 큰 이유는? (힌트: CO2의 강한 연간 계절성 — 봄에 최고, 가을에 최저)
 - 95% 신뢰구간이 예측 기간이 길어질수록 넓어지는 이유는?
+
+시각 자료: [SARIMA 예측 인터랙티브 시각화](../content/graphics/ch09/9-1-sarima-forecast.html)
+
+![SARIMA 예측 결과](../diagram/9-3-sarima-forecast.png)
 
 #### Step 3 — 직접 코딩
 
@@ -410,6 +424,8 @@ scaler = MinMaxScaler(feature_range=(0, 1))
 | LSTM | 높음 (수천+) | 중간 | 우수 | 낮음 | 중간 |
 | Transformer | 매우 높음 | 우수 | 우수 | 낮음 | 높음 |
 
+![시계열 Self-Attention 시각화](../content/graphics/ch09/9-6-1-attention-viz.png)
+
 **모형 선택 가이드**:
 - **데이터가 적고 해석이 중요**: ARIMA 또는 Prophet
 - **계절성 + 휴일 효과가 핵심**: Prophet
@@ -462,6 +478,14 @@ python 9-8-comparison-complex.py
 - 복잡 시계열에서 LSTM 다변량이 1위인 이유는? (힌트: 비선형 외생 변수 효과를 암묵적으로 학습)
 - 복잡 시계열에서 LSTM 단변량이 최하위인 이유는? (힌트: 외생 변수 없이 y만으로는 변동 설명 불가)
 - 이 결과에서 얻을 수 있는 핵심 교훈은 무엇인가?
+
+![모형 비교 결과](../diagram/9-8-model-comparison.png)
+
+![대규모 복잡 시계열 모형 비교](../diagram/9-8-complex-comparison.png)
+
+시각 자료: [CO2 비교 결과 HTML](../content/graphics/ch09/9-6-model-comparison.html)
+
+시각 자료: [복잡 시계열 비교 HTML](../content/graphics/ch09/9-7-complex-comparison.html)
 
 #### Step 3 — 직접 코딩
 

@@ -432,6 +432,8 @@ loss = kl_loss + gamma * recon_loss  # 표현 품질 유지
 - 실험 B에서 K-Means도 잘 작동하는 이유: "음식 vs 기술 vs 여행"처럼 도메인이 다르면 임베딩 공간에서 이미 잘 분리됨
 - VaDE가 실패하는 이유: GMM 파라미터 초기화와 ELBO 최적화가 불안정하여 하이퍼파라미터 튜닝 없이 수렴하지 않는 경우가 빈번
 
+![딥 클러스터링 비교](../diagram/4-5-deep-clustering-comparison.png)
+
 #### Step 3 — 직접 코딩
 
 **프롬프트 6**: t-SNE로 임베딩 공간 시각화
